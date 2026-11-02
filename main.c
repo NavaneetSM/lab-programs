@@ -5,38 +5,40 @@ int q[MAX];
 int front=-1,rear=-1;
 int item;
 
-
-
 void insert(int item)
 {
-    if(rear==MAX-1){
+    if((rear+1)%MAX==front)
+    {
         printf("Queue is overflow\n");
     }
     else{
-        printf("Enter the element to be inserted\n");
+        printf("Enter the element to be inserted:");
         scanf("%d",&item);
         if(front==-1)
+        {
             front=0;
-        rear++;
+            rear=0;
+        }
+        else{
+            rear=(rear+1)%MAX;
+        }
         q[rear]=item;
     }
 }
 
 void delete()
 {
-    if(front==-1||front>rear)
-    {
+    if(front==-1)
         printf("Queue is underflow");
-    }
     else{
-        printf("Deleted item is: %d",q[front]);
-        front++;
-        if(front>rear)
-        {
+        printf("Deleted item is:%d",q[front]);
+        if(front==rear){
             front=-1;
             rear=-1;
         }
-
+        else{
+            front=(front+1)%MAX;
+        }
     }
 }
 
@@ -44,13 +46,17 @@ void display()
 {
     int i;
     if(front==-1)
+    {
         printf("Queue is empty\n");
+    }
     else{
-        printf("the elements are:");
-        for(i=front;i<=rear;i++)
+        for(i=front;i<=rear;i=(i+1)%MAX){
             printf("%d ",q[i]);
+
         }
+    }
 }
+
 int main()
 {
     int choice;
@@ -75,7 +81,7 @@ int main()
             case 4: return 0;
 
             default: printf("Invalid Choice\n");
+                     break;
         }
     }
 }
-
