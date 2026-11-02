@@ -1,63 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+int q[MAX];
+int front=-1,rear=-1;
+int item;
 
-#include<stdio.h>
-#include<ctype.h>
-#include<stdlib.h>
-#define MAX=50
-int top=-1;
-char s[],ch;
-void push(char ch){
- s[++top]=ch;
- }
 
-char pop(){
- return s[top--];
- }
 
-int pr(char symbol){
- if (ch=='^')
-    return (3);
- else if (ch=='*' ||ch=='/')
-        return (2);
- else if (ch=='+' ||ch=='-')
-      return (1);
- else
-    return (0);
-}
-
-void main(){
-    char infix[50],postfix[50],ch,elem;
-    int i=0,k=0;
-    printf("Enter infix expression:");
-    scanf("%s",infix);
-    push('#');
-    while((ch=infix[i++])!='\0'){
-        if(ch=='('){
-            push(ch);
-           }
-        else if(isalnum(ch)){
-            postfix[k++]=ch;
-        }
-        else{
-            if(ch==')'){
-                while(s[top]!='('&&s[top]!='#'){
-                        postfix[k++]=pop();
-                        elem=pop();
-                }
-            }
-            else{
-                while(pr(s[top])>pr(ch)){
-                    postfix[k++]=pop();
-                }
-                push(ch);
-                }
-            }
-
-            }
-    while(s[top]!='#'){
-        postfix[k++]=pop();
+void insert(int item)
+{
+    if(rear==MAX-1){
+        printf("Queue is overflow\n");
     }
-    postfix[k]='\0';
-    printf("POstfix expression is %s",postfix);
+    else{
+        printf("Enter the element to be inserted\n");
+        scanf("%d",&item);
+        if(front==-1)
+            front=0;
+        rear++;
+        q[rear]=item;
+    }
 }
 
+void delete()
+{
+    if(front==-1||front>rear)
+    {
+        printf("Queue is underflow");
+    }
+    else{
+        printf("Deleted item is: %d",q[front]);
+        front++;
+        if(front>rear)
+        {
+            front=-1;
+            rear=-1;
+        }
+
+    }
+}
+
+void display()
+{
+    int i;
+    if(front==-1)
+        printf("Queue is empty\n");
+    else{
+        printf("the elements are:");
+        for(i=front;i<=rear;i++)
+            printf("%d ",q[i]);
+        }
+}
+int main()
+{
+    int choice;
+
+    while(1)
+    {
+        printf("\n1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1: insert(item);
+                    break;
+
+            case 2: delete();
+                    break;
+
+            case 3: display();
+                    break;
+
+            case 4: return 0;
+
+            default: printf("Invalid Choice\n");
+        }
+    }
+}
 
